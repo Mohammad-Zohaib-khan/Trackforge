@@ -1,0 +1,37 @@
+{
+  "name": "trackforge",
+  "private": true,
+  "version": "1.0.0",
+  "description": "TrackForge \u2014 personal finance and expense tracking (MERN, TypeScript).",
+  "type": "module",
+  "workspaces": [
+    "packages/shared",
+    "apps/api",
+    "apps/web"
+  ],
+  "engines": {
+    "node": ">=20.19.0"
+  },
+  "scripts": {
+    "build:shared": "npm run build -w @trackforge/shared",
+    "dev": "npm run build:shared && concurrently -n api,web -c cyan,green \"npm run dev -w @trackforge/api\" \"npm run dev -w @trackforge/web\"",
+    "dev:api": "npm run build:shared && npm run dev -w @trackforge/api",
+    "dev:web": "npm run dev -w @trackforge/web",
+    "build": "npm run build:shared && npm run build -w @trackforge/api && npm run build -w @trackforge/web",
+    "start": "npm run start -w @trackforge/api",
+    "typecheck": "npm run build:shared && npm run typecheck -w @trackforge/shared && npm run typecheck -w @trackforge/api && npm run typecheck -w @trackforge/web",
+    "lint": "eslint .",
+    "test": "npm run build:shared && npm run test -w @trackforge/shared && npm run test -w @trackforge/api && npm run test -w @trackforge/web",
+    "seed": "npm run build:shared && npm run seed -w @trackforge/api",
+    "audit:prod": "npm audit --omit=dev"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "concurrently": "^10.0.6",
+    "eslint": "^10.12.0",
+    "eslint-plugin-react-hooks": "^7.1.1",
+    "globals": "^17.13.0",
+    "typescript": "~5.9.3",
+    "typescript-eslint": "^8.71.1"
+  }
+}
